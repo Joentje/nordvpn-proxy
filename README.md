@@ -47,7 +47,7 @@ For example:
 ```Shell
 docker run -d \
 --network="container:vpn" \
-<image>:<version> 
+imagename 
 ```
 
 For more info on networking, check the Docker [docs](https://docs.docker.com/engine/reference/run/#network-settings)
