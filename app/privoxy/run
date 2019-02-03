@@ -1,0 +1,11 @@
+#!/bin/sh
+. /app/date.sh --source-only
+sleep 10
+
+# Return traffic that went through OpenVPN works.
+gw=$(ip route | awk '/default/ {print $3}')
+ip route add to ${LOCAL_NETWORK} via $gw dev eth0
+
+# Start privoxy
+echo "$(adddate) INFO: Privoxy will be started"
+privoxy --no-daemon

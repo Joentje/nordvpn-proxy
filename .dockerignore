@@ -1,0 +1,5 @@
+.vscode
+.idea
+.git
+docker-compose*
+README.md

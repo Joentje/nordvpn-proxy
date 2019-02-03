@@ -1,0 +1,6 @@
+confdir /app/privoxy
+
+listen-address  0.0.0.0:8118
+
+debug   1    # Show each GET/POST/CONNECT request
+debug   4096 # Startup banner and warnings

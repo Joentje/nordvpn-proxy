@@ -1,0 +1,33 @@
+#!/bin/bash
+set -e -u -o pipefail
+
+source /app/ovpn/servers_recommendations.sh
+
+. /app/date.sh --source-only
+
+echo ########################################################
+echo "$(adddate) INFO: Connection to server: $SERVERNAME"
+echo "$(adddate) INFO: Current load: $LOAD"
+echo "$(adddate) INFO: Info updated at: $UPDATED_AT"
+echo "$(adddate) INFO: Server IP: $IP"
+echo ########################################################
+
+cd /app/ovpn/config/ovpn_tcp
+
+if [ -n "$SERVER" ]; then
+  set -- "$@" '--config' "${SERVER}.nordvpn.com.tcp.ovpn"
+else
+  echo "$(adddate) ERROR: No OpenVPN config found in `pwd`/${SERVER}.nordvpn.com.tcp.ovpn. Exiting."
+  exit 1
+fi
+if [ -n "$USERNAME" -a -n "$PASSWORD" ]; then
+  echo "$USERNAME" > auth.conf
+  echo "$PASSWORD" >> auth.conf
+  chmod 600 auth.conf
+  set -- "$@" '--auth-user-pass' 'auth.conf'
+else
+  echo "$(adddate) ERROR: No credentials available, please fill in the ENVIRONMENT variables USERNAME and PASSWORD. Exiting"
+  exit 1
+fi
+
+openvpn "$@"
