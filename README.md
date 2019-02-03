@@ -6,7 +6,7 @@ Alpine with OpenVPN and Privoxy to use your NordVPN account.
 
 - Connects to the recommended server for you!
 - Reconnects if the load is to high.
-- Heathcheck if the connection is not secure.
+- Healthcheck if the connection is not secure.
 - Privoxy to use it elsewhere, for private browsing!
 - Connect your other containers, so they have a secured connection as well. A cool Docker feature :)
 
