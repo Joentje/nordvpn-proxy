@@ -67,7 +67,7 @@ For more info on networking, check the Docker [docs](https://docs.docker.com/com
 
 ## Use Privoxy in your browser
 
-To connect to the VPN Proxy, set your browser proxy to `<host_where_container_runs>:8118`.
+To connect to the VPN Proxy, set your browser proxy to `ip.where.docker.runs:8118`.
 
 For Chrome you can use: 
 - [Chrome Store](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)
