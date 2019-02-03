@@ -23,7 +23,7 @@ RUN \
     find /app -name run | xargs chmod u+x && \
     find /app -name *.sh | xargs chmod u+x && \
     \
-    echo "####### Download en extract ovpn files #######" && \
+    echo "####### Download and extract ovpn files #######" && \
     mkdir -p ${OVPN_CONFIG_DIR} && \
     curl -o  ${OVPN_CONFIG_DIR}/ovpn.zip ${OVPN_FILES} && \
     unzip ${OVPN_CONFIG_DIR}/ovpn.zip -d ${OVPN_CONFIG_DIR} && \
