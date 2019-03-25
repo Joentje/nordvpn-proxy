@@ -72,3 +72,7 @@ To connect to the VPN Proxy, set your browser proxy to `ip.where.docker.runs:811
 For Chrome you can use: 
 - [Chrome Store](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)
 - [GitHub](https://github.com/FelisCatus/SwitchyOmega)
+
+Feature request
+
+- Download certs every x
