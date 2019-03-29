@@ -15,9 +15,9 @@ echo ########################################################
 cd /app/ovpn/config/ovpn_tcp
 
 if [ -n "$SERVER" ]; then
-  set -- "$@" '--config' "${SERVER}.nordvpn.com.tcp.ovpn"
+  set -- "$@" '--config' "${SERVER}.tcp.ovpn"
 else
-  echo "$(adddate) ERROR: No OpenVPN config found in `pwd`/${SERVER}.nordvpn.com.tcp.ovpn. Exiting."
+  echo "$(adddate) ERROR: No OpenVPN config found in `pwd`/${SERVER}.tcp.ovpn. Exiting."
   exit 1
 fi
 if [ -n "$USERNAME" -a -n "$PASSWORD" ]; then

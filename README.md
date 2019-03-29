@@ -73,6 +73,6 @@ For Chrome you can use:
 - [Chrome Store](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)
 - [GitHub](https://github.com/FelisCatus/SwitchyOmega)
 
-Feature request
+## Contribution
 
-- Download certs every x
+Feel free to fork and contribute, or submit an issue.
