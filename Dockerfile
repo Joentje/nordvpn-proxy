@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.10.1
 LABEL MAINTAINER "Jeroen Slot"
 
 ENV OVPN_FILES="https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip" \
