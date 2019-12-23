@@ -9,6 +9,7 @@ Alpine with OpenVPN and Privoxy to use your NordVPN account.
 - Healthcheck if the connection is not secure.
 - Privoxy to use it elsewhere, for private browsing!
 - Connect your other containers, so they have a secured connection as well. A cool Docker feature :)
+- It will download the ovpn files daily! So you will stay up-to-date with the latest ovpn files.
 
 # Prerequisite 
 
@@ -37,6 +38,7 @@ docker run -d \
 -e "PASSWORD=<nordvpn_password>" \
 -e "LOCAL_NETWORK=192.168.1.0/24" \
 -v /etc/localtime:/etc/localtime:ro \
+-v ovpn-data:/app/ovpn/config \
 -p 8118:8118 \
 jeroenslot/nordvpn-proxy:latest 
 ```
