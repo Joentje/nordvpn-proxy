@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e -u -o pipefail
 
+source /app/ovpn/get-ovpn-files.sh
 source /app/ovpn/servers_recommendations.sh
 
 . /app/date.sh --source-only
