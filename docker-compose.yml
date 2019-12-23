@@ -11,6 +11,7 @@ services:
       - 103.86.99.100
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ovpn-data:/app/ovpn/config
     environment:
       - USERNAME=<nordvpn_username>
       - PASSWORD=<nordvpn_password>
@@ -19,4 +20,7 @@ services:
       - default
     ports:
       - 8118:8118
-    restart: always  
+    restart: always
+
+volumes:
+  ovpn-data:
