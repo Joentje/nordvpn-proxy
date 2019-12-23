@@ -9,9 +9,13 @@ rm -f "$cronfile"
 echo "$(adddate) INFO: Creating new cronfile"
 touch "$cronfile"
 
+#Add cron for GET_OVPN_FILES
+printf "$CRON_OVPN_FILES '/app/ovpn/get-ovpn-files.sh'\n" > "$cronfile"
+
 if [[ "${CRON}" ]]; then
     echo "$(adddate) INFO: Your cron settings (${CRON}) will be applied!"
-    printf "$CRON '/app/ovpn/get-status-server.sh'" > "$cronfile"
+    printf "$CRON '/app/ovpn/get-status-server.sh'" >> "$cronfile"
+    #Add empty line at the end of file
     sed -i -e '$a\' $cronfile
 else
     echo "$(adddate) WARNING: No cron config, server load will not be checked! This is optional!"
