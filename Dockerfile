@@ -6,6 +6,7 @@ ENV OVPN_FILES="https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip"
     SERVER_RECOMMENDATIONS_URL="https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations" \
     SERVER_STATS_URL="https://nordvpn.com/api/server/stats/" \
     CRON="*/15 * * * *" \
+    CRON_OVPN_FILES="@daily"\
     USERNAME="" \
     PASSWORD="" \
     LOAD=75 \
@@ -17,21 +18,21 @@ EXPOSE 8118
 RUN \
     echo "####### Installing packages #######" && \
     apk --update --no-cache add \
-    privoxy openvpn runit bash jq ncurses curl unzip && \
-    \
+      privoxy \
+      openvpn \
+      runit \
+      bash \
+      jq \
+      ncurses \
+      curl \
+      unzip \
+      && \
     echo "####### Changing permissions #######" && \
-    find /app -name run | xargs chmod u+x && \
-    find /app -name *.sh | xargs chmod u+x && \
-    \
-    echo "####### Download and extract ovpn files #######" && \
-    mkdir -p ${OVPN_CONFIG_DIR} && \
-    curl -o  ${OVPN_CONFIG_DIR}/ovpn.zip ${OVPN_FILES} && \
-    unzip ${OVPN_CONFIG_DIR}/ovpn.zip -d ${OVPN_CONFIG_DIR} && \
-    rm -rf ${OVPN_CONFIG_DIR}/ovpn.zip && \
-    \
-    echo "####### Removing packages #######" && \
-    apk del unzip && \
-    rm -rf /var/cache/apk/*
+      find /app -name run | xargs chmod u+x && \
+      find /app -name *.sh | xargs chmod u+x \
+      && \
+    echo "####### Removing cache #######" && \
+      rm -rf /var/cache/apk/*
 
 CMD ["runsvdir", "/app"]
 
