@@ -9,6 +9,7 @@ ENV OVPN_FILES="https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip"
     CRON_OVPN_FILES="@daily"\
     USERNAME="" \
     PASSWORD="" \
+    COUNTRY="" \
     LOAD=75 \
     LOCAL_NETWORK=192.168.1.0/24
 
