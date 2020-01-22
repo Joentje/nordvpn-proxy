@@ -13,12 +13,12 @@ echo "$(adddate) INFO: Info updated at: $UPDATED_AT"
 echo "$(adddate) INFO: Server IP: $IP"
 echo ########################################################
 
-cd /app/ovpn/config/ovpn_${PROTOCOL^^}
+cd /app/ovpn/config/ovpn_${PROTOCOL,,}
 
 if [ -n "$SERVER" ]; then
-  set -- "$@" '--config' "${SERVER}.${PROTOCOL^^}.ovpn"
+  set -- "$@" '--config' "${SERVER}.${PROTOCOL,,}.ovpn"
 else
-  echo "$(adddate) ERROR: No OpenVPN config found in `pwd`/${SERVER}.${PROTOCOL^^}.ovpn. Exiting."
+  echo "$(adddate) ERROR: No OpenVPN config found in `pwd`/${SERVER}.${PROTOCOL,,}.ovpn. Exiting."
   exit 1
 fi
 if [ -n "$USERNAME" -a -n "$PASSWORD" ]; then
