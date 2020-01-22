@@ -7,6 +7,7 @@ ENV OVPN_FILES="https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip"
     SERVER_STATS_URL="https://nordvpn.com/api/server/stats/" \
     CRON="*/15 * * * *" \
     CRON_OVPN_FILES="@daily"\
+    PROTOCOL="tcp"\
     USERNAME="" \
     PASSWORD="" \
     COUNTRY="" \
