@@ -11,6 +11,7 @@ echo "$(adddate) INFO: Connection to server: $SERVERNAME"
 echo "$(adddate) INFO: Current load: $LOAD"
 echo "$(adddate) INFO: Info updated at: $UPDATED_AT"
 echo "$(adddate) INFO: Server IP: $IP"
+echo "$(adddate) INFO: Protocol: $PROTOCOL"
 echo ########################################################
 
 cd /app/ovpn/config/ovpn_${PROTOCOL,,}
