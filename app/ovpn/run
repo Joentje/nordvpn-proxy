@@ -6,6 +6,14 @@ source /app/ovpn/servers_recommendations.sh
 
 . /app/date.sh --source-only
 
+# Create a tun device see: https://www.kernel.org/doc/Documentation/networking/tuntap.txt
+if [ ! -c /dev/net/tun ]; then
+    echo "$(adddate) INFO: Creating tun interface /dev/net/tun"
+    mkdir -p /dev/net
+    mknod /dev/net/tun c 10 200
+    chmod 600 /dev/net/tun
+fi
+
 echo ########################################################
 echo "$(adddate) INFO: Connection to server: $SERVERNAME"
 echo "$(adddate) INFO: Current load: $LOAD"
