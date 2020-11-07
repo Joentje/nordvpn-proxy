@@ -33,7 +33,6 @@ You will need a [NordVPN](https://nordvpn.com) account.
 ```Shell
 docker run -d \
 --cap-add=NET_ADMIN \
---device=/dev/net/tun \
 --name=vpn \
 --dns=103.86.96.100 \
 --dns=103.86.99.100 \
