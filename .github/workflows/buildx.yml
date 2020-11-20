@@ -7,16 +7,12 @@ jobs:
   buildx:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v2
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
-      -
-        name: Builder instance name
+      - name: Builder instance name
         run: echo ${{ steps.buildx.outputs.name }}
-      -
-        name: Available platforms
+      - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
