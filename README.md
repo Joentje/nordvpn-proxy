@@ -1,4 +1,13 @@
-[![logo](https://s1.nordcdn.com/nordvpn/media/1.90.0/images/global/favicon/favicon-196x196.png)](https://nordvpn.com)
+<p align="center">
+    <a href="https://nordvpn.com/"><img src="https://s1.nordcdn.com/nordvpn/media/1.90.0/images/global/favicon/favicon-196x196.png"/></a>
+    </br>
+    <a href="https://github.com/Joentje/nordvpn-proxy"><img src="https://github.com/Joentje/nordvpn-proxy/workflows/nordvpn-proxy/badge.svg"/></a>
+    <a href="https://github.com/Joentje/nordvpn-proxy"><img src="https://badgen.net/github/forks/Joentje/nordvpn-proxy?icon=github&label=forks&color=black"/></a>
+    <a href="https://github.com/Joentje/nordvpn-proxy"><img src="https://badgen.net/github/stars/Joentje/nordvpn-proxy?icon=github&label=stars&color=black"/></a>
+    <a href="https://cloud.docker.com/u/jeroenslot/repository/docker/jeroenslot/nordvpn-proxy"><img src="https://badgen.net/docker/size/jeroenslot/nordvpn-proxy?icon=docker&label=size"/></a>
+    <a href="https://cloud.docker.com/u/jeroenslot/repository/docker/jeroenslot/nordvpn-proxy"><img src="https://badgen.net/docker/pulls/jeroenslot/nordvpn-proxy?icon=docker&label=pulls"/></a>
+    <a href="https://cloud.docker.com/u/jeroenslot/repository/docker/jeroenslot/nordvpn-proxy"><img src="https://badgen.net/docker/stars/jeroenslot/nordvpn-proxy?icon=docker&label=stars"/></a>
+</p>
 
 Alpine with OpenVPN and Privoxy to use your NordVPN account.
 
