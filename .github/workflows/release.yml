@@ -42,4 +42,4 @@ jobs:
           platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
           tags: |
-            jeroenslot/nordvpn-proxy:${{VERSION}}
+            jeroenslot/nordvpn-proxy:${{ env.VERSION }}

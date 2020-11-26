@@ -3,6 +3,7 @@
     </br>
     </br>
     <a href="https://github.com/Joentje/nordvpn-proxy"><img src="https://github.com/Joentje/nordvpn-proxy/workflows/latest/badge.svg"/></a>
+    <a href="https://github.com/Joentje/nordvpn-proxy"><img src="https://github.com/Joentje/nordvpn-proxy/workflows/release/badge.svg"/></a>
     <a href="https://github.com/Joentje/nordvpn-proxy"><img src="https://badgen.net/github/stars/Joentje/nordvpn-proxy?icon=github&label=stars&color=black"/></a>
     <a href="https://cloud.docker.com/u/jeroenslot/repository/docker/jeroenslot/nordvpn-proxy"><img src="https://badgen.net/docker/size/jeroenslot/nordvpn-proxy?icon=docker&label=size"/></a>
     <a href="https://cloud.docker.com/u/jeroenslot/repository/docker/jeroenslot/nordvpn-proxy"><img src="https://badgen.net/docker/pulls/jeroenslot/nordvpn-proxy?icon=docker&label=pulls"/></a>
