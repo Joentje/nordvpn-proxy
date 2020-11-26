@@ -36,6 +36,13 @@ You will need a [NordVPN](https://nordvpn.com) account.
 - `COUNTRY` *Optional*, you can choose your own country by using the two-letter country codes that are supported by NordVPN.
 - `PROTOCOL` *Optional*, default set to `tcp`, you can change it to `udp`.
 - `SERVER` *Optional*, if not set, connects to the recommended server for you. If set, connects to the server you specify. Example server name format: `us2484.nordvpn.com`.
+- `SERVER_TYPE` *Optional*, you can specify a desired type of servers.  Valid Values:
+  - "p2p"
+  - "double vpn"
+  - "onion over vpn"
+  - "dedicated ip"
+  - "standard vpn"
+  - "obfuscated"
 
 
 ## Start container
@@ -50,6 +57,7 @@ docker run -d \
 -e "USERNAME=<nordvpn_username>" \
 -e "PASSWORD=<nordvpn_password>" \
 -e "LOCAL_NETWORK=192.168.1.0/24" \
+-e "SERVER_TYPE="standard vpn" \
 -v /etc/localtime:/etc/localtime:ro \
 -v ovpn-data:/app/ovpn/config \
 -p 8118:8118 \

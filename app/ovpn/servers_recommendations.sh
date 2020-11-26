@@ -5,16 +5,13 @@
 #Env
 JSON_FILE=/tmp/servers_recommendations.json
 JSON_FILE_SERVER_COUNTRIES=/tmp/servers_countries
+JSON_FILE_SERVER_TYPES=/tmp/servers_types
+PARAMS=''
 
-# If no server was set, choose the best
-if [[ ! -v SERVER ]]; then
-    echo "$(adddate) INFO: SERVER has not been set, choosing best for you."
+function get_country {
     if [ -z "$COUNTRY" ]
-        then 
+        then
             echo "$(adddate) INFO: No country has been set. The default will be picked by NordVPN API. If you want to use a country, please use e.g. COUNTRY=it"
-            #GET fastest server based on NordVPN API
-            #https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations
-            curl -s $SERVER_RECOMMENDATIONS_URL -o $JSON_FILE
         else
             echo "$(adddate) INFO: Your country setting will be used. This is set to: ${COUNTRY^^}"
 
@@ -23,17 +20,51 @@ if [[ ! -v SERVER ]]; then
             if [ -f "$JSON_FILE_SERVER_COUNTRIES" ]
                 then
                     echo "$(adddate) INFO: The country codes are known, skipping"
-                    export COUNTRY_CODE=$(cat $JSON_FILE_SERVER_COUNTRIES | jq '.[]  | select(.code == "'${COUNTRY^^}'") | .id')
-                else 
+                else
                     echo "$(adddate) INFO: The country codes are unknown, getting country codes from API"
                     curl -s https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_countries -o /tmp/servers_countries
-                    export COUNTRY_CODE=$(cat $JSON_FILE_SERVER_COUNTRIES | jq '.[]  | select(.code == "'${COUNTRY^^}'") | .id')
             fi
-          
-          #GET fastest server based on COUNTRY
-          #https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations&filters={%22country_id%22:106}
-          wget --quiet --header 'cache-control: no-cache' --output-document=$JSON_FILE ''$SERVER_RECOMMENDATIONS_URL'&filters={%22country_id%22:'$COUNTRY_CODE'}'
+
+            export COUNTRY_CODE=$(cat $JSON_FILE_SERVER_COUNTRIES | jq '.[]  | select(.code | ascii_upcase == "'${COUNTRY^^}'") | .id')
+            PARAMS=$PARAMS'&filters={%22country_id%22:'$COUNTRY_CODE'}'
+            #GET fastest server based on COUNTRY
+            #https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations&filters={%22country_id%22:106}
     fi
+}
+
+function get_server_types {
+    if [ -z "$SERVER_TYPE" ]; then
+        echo "$(adddate) INFO: No server_type has been set.  The default will be pickd by NordVPN API.  If you want to specify a server_type, please use ee.g. SERVER_TYPE=p2p"
+    else
+        export SERVER_TYPE="${SERVER_TYPE^^}"
+        echo "$(adddate) INFO: Your server_type setting will be used. This is set to: $SERVER_TYPE"
+
+        #Country codes will only be fetched once. You can force to get a new list to start a new container
+        #This will speed up the process
+        if [ -f "$JSON_FILE_SERVER_TYPES" ]
+            then
+                echo "$(adddate) INFO: The server_type codes are known, skipping"
+            else
+                echo "$(adddate) INFO: The server_type codes are unknown, getting server_type codes from API"
+                curl -s https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_groups -o $JSON_FILE_SERVER_TYPES
+        fi
+        export SERVER_TYPE_CODE=$(cat $JSON_FILE_SERVER_TYPES | jq --arg server_type "$SERVER_TYPE" '.[] | select(.name | ascii_upcase == $server_type) | .id')
+
+        PARAMS=$PARAMS'&filters={%22servers_groups%22:['$SERVER_TYPE_CODE']}'
+        #GET fastest server based on SERVER_TYPE
+        #https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations&filters={%22group_id%22:106}
+    fi
+}
+
+
+# If no server was set, choose the best
+if [[ ! -v SERVER ]]; then
+    echo "$(adddate) INFO: SERVER has not been set, choosing best for you."
+
+    get_country
+    get_server_types
+
+    wget --quiet --header 'cache-control: no-cache' --output-document=$JSON_FILE ''$SERVER_RECOMMENDATIONS_URL$PARAMS''
 
     #Set vars
     export SERVER="$(jq -r '.[0].hostname' $JSON_FILE)"
