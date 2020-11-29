@@ -2,8 +2,6 @@ name: latest
 
 on:
   push:
-    tags-ignore: 
-      - '**'
 
 jobs:
   buildx:
