@@ -19,13 +19,13 @@ EXPOSE 8118
 
 RUN \
     echo "####### Installing packages #######" && \
+    apk upgrade && apk upgrade && \
     apk --update --no-cache add \
       privoxy \
       openvpn \
       runit \
       bash \
-      jq=1.6_rc1-r0 \
-      musl-utils=1.1.24-r10 \
+      jq>1.6-r1 \
       ncurses \
       curl \
       unzip \
