@@ -26,7 +26,6 @@ jobs:
         run: echo ${{ steps.buildx.outputs.name }}
       - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
-      - uses: actions/checkout@v2
       - name: Run Snyk to check Docker image for vulnerabilities
         continue-on-error: true
         uses: snyk/actions/docker@master
