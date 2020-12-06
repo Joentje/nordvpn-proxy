@@ -24,7 +24,8 @@ RUN \
       openvpn \
       runit \
       bash \
-      jq \
+      jq=1.6_rc1-r0 \
+      musl-utils=1.1.24-r10 \
       ncurses \
       curl \
       unzip \
