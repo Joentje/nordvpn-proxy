@@ -17,6 +17,7 @@ Alpine with OpenVPN and Privoxy to use your NordVPN account.
 
 - Connects to the recommended server for you! Provided by the API.
 - Reconnects if the load is to high on a NordVPN server (Depends on setup CRON).
+- Reconnects to random servers if specified
 - Healthcheck if the connection is not secure.
 - Privoxy to use it elsewhere, for private browsing!
 - Connect your other containers, so they have a secured connection as well. A cool Docker feature :)
@@ -34,6 +35,7 @@ You will need a [NordVPN](https://nordvpn.com) account.
 - `LOCAL_NETWORK` - The CIDR mask of the local IP network (e.g. 192.168.1.0/24, 10.1.1.0/24). This is needed to response to your client.
 - `CRON` You can set this variable to change the default check of every 15 minutes. This will be used to check if the LOAD is still OK. This can be changed using the CRON syntax.
 - `LOAD` If the load is > 75 on a NordVPN server, OpenVPN will be restarted and connects to the recommended server for you! This check will be done every 15 minutes by CRON.
+- `RANDOM_TOP` If set, it will randomly select from the top "x" number of recommended servers
 - `COUNTRY` *Optional*, you can choose your own country by using the two-letter country codes that are supported by NordVPN.
 - `PROTOCOL` *Optional*, default set to `tcp`, you can change it to `udp`.
 - `SERVER` *Optional*, if not set, connects to the recommended server for you. If set, connects to the server you specify. Example server name format: `us2484.nordvpn.com`.
@@ -88,6 +90,14 @@ To connect to the VPN Proxy, set your browser proxy to `ip.where.docker.runs:811
 For Chrome you can use: 
 - [Chrome Store](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)
 - [GitHub](https://github.com/FelisCatus/SwitchyOmega)
+
+## Picking a random server
+To ensure that a new random server is picked during each iteration of CRON, set the following variables.
+Note that the higher you set RANDOM_TOP, the more random the pick will be.
+```
+LOAD=0
+RANDOM_TOP=100
+```
 
 ## Contribution
 

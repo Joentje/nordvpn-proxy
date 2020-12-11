@@ -3,7 +3,7 @@ LABEL MAINTAINER "Jeroen Slot"
 
 ENV OVPN_FILES="https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip" \
     OVPN_CONFIG_DIR="/app/ovpn/config" \
-    SERVER_RECOMMENDATIONS_URL="https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations" \
+    SERVER_RECOMMENDATIONS_URL="https://api.nordvpn.com/v1/servers/recommendations" \
     SERVER_STATS_URL="https://nordvpn.com/api/server/stats/" \
     CRON="*/15 * * * *" \
     CRON_OVPN_FILES="@daily"\
@@ -12,6 +12,7 @@ ENV OVPN_FILES="https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip"
     PASSWORD="" \
     COUNTRY="" \
     LOAD=75 \
+    RANDOM_TOP="" \
     LOCAL_NETWORK=192.168.1.0/24
 
 COPY app /app
