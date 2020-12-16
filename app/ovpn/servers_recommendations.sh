@@ -6,7 +6,8 @@
 JSON_FILE=/tmp/servers_recommendations.json
 JSON_FILE_SERVER_COUNTRIES=/tmp/servers_countries
 JSON_FILE_SERVER_TYPES=/tmp/servers_types
-PARAMS=''
+COUNTRY_CODE=''
+SERVER_TYPE_CODE=''
 
 function get_country {
     if [ -z "$COUNTRY" ]
@@ -25,8 +26,7 @@ function get_country {
                     curl -s https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_countries -o /tmp/servers_countries
             fi
 
-            export COUNTRY_CODE=$(cat $JSON_FILE_SERVER_COUNTRIES | jq '.[]  | select(.code | ascii_upcase == "'${COUNTRY^^}'") | .id')
-            PARAMS=$PARAMS'&filters={%22country_id%22:'$COUNTRY_CODE'}'
+            COUNTRY_CODE=$(cat $JSON_FILE_SERVER_COUNTRIES | jq '.[]  | select(.code | ascii_upcase == "'${COUNTRY^^}'") | .id')
             #GET fastest server based on COUNTRY
             #https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations&filters={%22country_id%22:106}
     fi
@@ -48,9 +48,7 @@ function get_server_types {
                 echo "$(adddate) INFO: The server_type codes are unknown, getting server_type codes from API"
                 curl -s https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_groups -o $JSON_FILE_SERVER_TYPES
         fi
-        export SERVER_TYPE_CODE=$(cat $JSON_FILE_SERVER_TYPES | jq --arg server_type "$SERVER_TYPE" '.[] | select(.name | ascii_upcase == $server_type) | .id')
-
-        PARAMS=$PARAMS'&filters={%22servers_groups%22:['$SERVER_TYPE_CODE']}'
+        SERVER_TYPE_CODE=$(cat $JSON_FILE_SERVER_TYPES | jq --arg server_type "$SERVER_TYPE" '.[] | select(.name | ascii_upcase == $server_type) | .id')
         #GET fastest server based on SERVER_TYPE
         #https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations&filters={%22group_id%22:106}
     fi
@@ -64,7 +62,8 @@ if [[ ! -v SERVER ]]; then
     get_country
     get_server_types
 
-    wget --quiet --header 'cache-control: no-cache' --output-document=$JSON_FILE ''$SERVER_RECOMMENDATIONS_URL$PARAMS''
+    FILTERS="&filters=%7B%22country_id%22:${COUNTRY_CODE},%22server_groups%22:%5B${SERVER_TYPE_CODE}%5D%7D"
+    curl -s -o $JSON_FILE "$SERVER_RECOMMENDATIONS_URL$FILTERS"
 
     #Set vars
     export SERVER="$(jq -r '.[0].hostname' $JSON_FILE)"
@@ -73,7 +72,7 @@ if [[ ! -v SERVER ]]; then
     export UPDATED_AT="$(jq -r '.[0].updated_at' $JSON_FILE)"
     export IP="$(jq -r '.[0].station' $JSON_FILE)"
     echo "$(jq -r '.[0].hostname' $JSON_FILE)" > /tmp/nordvpn_hostname
-
+    echo "Connecting to $(jq -c -r '.[0].name' $JSON_FILE)  with technologies $(jq -c -r '.[0].groups | map(.title)' $JSON_FILE)"
 # Otherwise, use the server that was specified
 else
     echo "$(adddate) INFO: SERVER has been set to ${SERVER^^}"
