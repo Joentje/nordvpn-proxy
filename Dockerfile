@@ -13,7 +13,7 @@ ENV OVPN_FILES="https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip"
     COUNTRY="" \
     LOAD=75 \
     RANDOM_TOP="" \
-    LOCAL_NETWORK=192.168.1.0/24
+    LOCAL_NETWORK=""
 
 COPY app /app
 EXPOSE 8118
