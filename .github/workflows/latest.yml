@@ -2,8 +2,13 @@ name: latest
 
 on:
   push:
+    branches:
+      - "develop"
     tags-ignore: 
       - '**'
+  pull_request:
+    branches:
+      - "develop"
 
 jobs:
   buildx:
