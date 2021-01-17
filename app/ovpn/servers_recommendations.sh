@@ -9,13 +9,29 @@ JSON_FILE_SERVER_COUNTRIES=/tmp/servers_countries
 # If no server was set, choose the best
 if [[ ! -v SERVER ]]; then
     echo "$(adddate) INFO: SERVER has not been set, choosing best for you."
-    QUERY_PARAM='?'
+
+    QUERY_PARAM=''
+
+    # Number of recommended servers to retrieve and choose between
     if [ -z "$RANDOM_TOP" ]
         then
-            QUERY_PARAM=$QUERY_PARAM'limit=1'
+            QUERY_PARAM=$QUERY_PARAM'&limit=1'
         else
-            QUERY_PARAM=$QUERY_PARAM'limit='$RANDOM_TOP
+            QUERY_PARAM=$QUERY_PARAM'&limit='$RANDOM_TOP
     fi
+
+    # Start the filtering json object
+    QUERY_PARAM=$QUERY_PARAM'&filters={'
+
+    # Filter to only include either openvpn-tcp or openvpn-udp capable servers
+    if [[ "$PROTOCOL" == "tcp" ]]
+        then
+          QUERY_PARAM=$QUERY_PARAM'%22servers_technologies%22:[5]'
+        else #udp
+          QUERY_PARAM=$QUERY_PARAM'%22servers_technologies%22:[3]'
+    fi
+
+    # Add optional country filter
     if [ -z "$COUNTRY" ]
         then 
             echo "$(adddate) INFO: No country has been set. The default will be picked by NordVPN API. If you want to use a country, please use e.g. COUNTRY=it"
@@ -36,11 +52,14 @@ if [[ ! -v SERVER ]]; then
                     export COUNTRY_CODE=$(cat $JSON_FILE_SERVER_COUNTRIES | jq '.[]  | select(.code == "'${COUNTRY^^}'") | .id')
             fi
 
-            QUERY_PARAM=$QUERY_PARAM'&filters%5Bcountry_id%5D='$COUNTRY_CODE
+            QUERY_PARAM=$QUERY_PARAM',%22country_id%22:'$COUNTRY_CODE
     fi
+
+    # Close the filtering json object
+    QUERY_PARAM=$QUERY_PARAM'}'
     
-    #GET fastest server based on COUNTRY
-    #https://api.nordvpn.com/v1/servers/recommendations?limit=10&filters=[country_id]=106
+    #GET fastest server
+    #https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations&filters={%22country_id%22:106,%22servers_technologies%22:[5]}
     curl -s $SERVER_RECOMMENDATIONS_URL$QUERY_PARAM -o $JSON_FILE
 
     NUMBER_OF_SERVERS="$(jq length $JSON_FILE)"
