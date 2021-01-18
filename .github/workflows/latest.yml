@@ -6,9 +6,6 @@ on:
       - "develop"
     tags-ignore: 
       - '**'
-  pull_request:
-    branches:
-      - "develop"
 
 jobs:
   buildx:
