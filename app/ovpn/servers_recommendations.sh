@@ -39,6 +39,9 @@ if [[ ! -v SERVER ]]; then
             QUERY_PARAM=$QUERY_PARAM'&filters%5Bcountry_id%5D='$COUNTRY_CODE
     fi
     
+    #Set filter based on OpenVPN with the correct protocol
+    QUERY_PARAM=$QUERY_PARAM'&filters%5Bservers_technologies%5D%5Bidentifier%5D=openvpn_'$PROTOCOL
+
     #GET fastest server based on COUNTRY
     #https://api.nordvpn.com/v1/servers/recommendations?limit=10&filters=[country_id]=106
     curl -s $SERVER_RECOMMENDATIONS_URL$QUERY_PARAM -o $JSON_FILE
