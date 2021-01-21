@@ -1,6 +1,6 @@
 confdir /app/privoxy
 
 listen-address  0.0.0.0:8118
-
+max-client-connections  100000 # Maximum 64 bit connection limit can be found in: /proc/sys/fs/file-max
 debug   1    # Show each GET/POST/CONNECT request
 debug   4096 # Startup banner and warnings
