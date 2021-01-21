@@ -39,6 +39,13 @@ if [[ ! -v SERVER ]]; then
             QUERY_PARAM=$QUERY_PARAM'&filters%5Bcountry_id%5D='$COUNTRY_CODE
     fi
     
+    if [[ -v GROUP ]];
+        then
+                echo "$(adddate) INFO: Your server_group setting will be used. This is set to: "$GROUP
+                # Adding server_group filter
+                QUERY_PARAM=$QUERY_PARAM'&filters%5Bservers_groups%5D%5Bidentifier%5D='$GROUP
+    fi
+
     #Set filter based on OpenVPN with the correct protocol
     QUERY_PARAM=$QUERY_PARAM'&filters%5Bservers_technologies%5D%5Bidentifier%5D=openvpn_'$PROTOCOL
 
