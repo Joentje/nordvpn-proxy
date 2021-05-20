@@ -30,14 +30,27 @@ else
   echo "$(adddate) ERROR: No OpenVPN config found in `pwd`/${SERVER}.${PROTOCOL,,}.ovpn. Exiting."
   exit 1
 fi
-if [ -n "$USERNAME" -a -n "$PASSWORD" ]; then
-  echo "$USERNAME" > auth.conf
-  echo "$PASSWORD" >> auth.conf
-  chmod 600 auth.conf
-  set -- "$@" '--auth-user-pass' 'auth.conf'
+
+AUTH_CONF_FILE=auth.conf
+if [ -n "$USERNAME_FILE" ]; then
+  cat "$USERNAME_FILE" > $AUTH_CONF_FILE
+elif [ -n "$USERNAME" ]; then
+  echo "$USERNAME" > $AUTH_CONF_FILE
 else
-  echo "$(adddate) ERROR: No credentials available, please fill in the ENVIRONMENT variables USERNAME and PASSWORD. Exiting"
+  echo "$(adddate) ERROR: No username credential available, please fill in the ENVIRONMENT variable USERNAME or USERNAME_FILE (to use Docker Secret). Exiting"
   exit 1
 fi
+if [ -n "$PASSWORD_FILE" ]; then
+  # Add return char before password
+  echo "" >> $AUTH_CONF_FILE
+  cat "$PASSWORD_FILE" >> $AUTH_CONF_FILE
+elif [ -n "$PASSWORD" ]; then
+  echo "$PASSWORD" >> $AUTH_CONF_FILE
+else
+  echo "$(adddate) ERROR: No password credential available, please fill in the ENVIRONMENT variable PASSWORD or PASSWORD_FILE (to use Docker Secret). Exiting"
+  exit 1
+fi
+chmod 600 $AUTH_CONF_FILE
+set -- "$@" '--auth-user-pass' "$AUTH_CONF_FILE"
 
 openvpn "$@"
