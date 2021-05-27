@@ -32,7 +32,7 @@ You will need a [NordVPN](https://nordvpn.com) account.
 
 - `USERNAME` Username of your account
 - `PASSWORD` Password of your account
-- `LOCAL_NETWORK` - The CIDR mask of the local IP network (e.g. 192.168.1.0/24, 10.1.1.0/24). This is needed to response to your client.
+- `LOCAL_NETWORK` - The CIDR mask of the local IP network(s) (e.g. `192.168.1.0/24` or `10.1.1.0/24` or multiple networks `192.168.1.0/24,10.1.1.0/24,172.16.2.0/24`). This is needed to response to your client.
 - `CRON` You can set this variable to change the default check of every 15 minutes. This will be used to check if the LOAD is still OK. This can be changed using the CRON syntax.
 - `LOAD` If the load is > 75 on a NordVPN server, OpenVPN will be restarted and connects to the recommended server for you! This check will be done every 15 minutes by CRON.
 - `RANDOM_TOP` *Optional*, if set, it will randomly select from the top "x" number of recommended servers. Valid values are integers between 1 and the number of servers that nord has.
