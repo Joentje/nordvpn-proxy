@@ -5,7 +5,7 @@
 # check if the file exists
 if [ -f ${OVPN_CONFIG_DIR}/ovpn.zip ]; then
   #the file exists continue checking if its older than two hours.
-  if test `find ${OVPN_CONFIG_DIR}/ovpn.zip -mmin +120`; then
+  if test `find ${OVPN_CONFIG_DIR}/ovpn.zip -mmin +${REFRESH_TIME}`; then
     download_files
   else
     echo "$(adddate) INFO: Skipping downloading OVPN files - as they are not older than two hours."
