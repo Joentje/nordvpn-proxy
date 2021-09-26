@@ -5,14 +5,14 @@
 # check if the file exists
 if [ -f ${OVPN_CONFIG_DIR}/ovpn.zip ]; then
   #the file exists continue checking if its older than two hours.
-  if test `find ${OVPN_CONFIG_DIR}/ovpn.zip -mmin +120` then
-    download_files()
+  if test `find ${OVPN_CONFIG_DIR}/ovpn.zip -mmin +120`; then
+    download_files
   else
     echo "$(adddate) INFO: Skipping downloading OVPN files - as they are not older than two hours."
   fi
 else
   #the files don't exists contiue to download and extract them.
-  download_files()
+  download_files
 fi
 
 function download_files() {
@@ -23,7 +23,7 @@ function download_files() {
   rm -rf ${OVPN_CONFIG_DIR}/ovpn.zip
 
   #Create directory if no volume is done
-  mkdir -p /app/ovpn/config
+  mkdir -p ${OVPN_CONFIG_DIR}
 
   #First remove files if exists
   rm -rf ${OVPN_CONFIG_DIR}/ovpn*
