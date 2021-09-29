@@ -2,7 +2,7 @@
 
 . /app/date.sh --source-only
 
-function download_files() {
+function download_files {
   # the current ovpn zip file is more than two hours old.
   echo "$(adddate) INFO: Downloading new OVPN files."
 
