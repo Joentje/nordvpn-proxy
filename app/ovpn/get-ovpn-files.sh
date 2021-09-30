@@ -35,9 +35,9 @@ if [ -f ${OVPN_CONFIG_DIR}/ovpn.zip ]; then
   if test `find ${OVPN_CONFIG_DIR}/ovpn.zip -mmin +${REFRESH_TIME}`; then
     download_files
   else
-    echo "$(adddate) INFO: Skipping downloading OVPN files - as they are not older than two hours."
+    echo "$(adddate) INFO: Skipping downloading OVPN files - as they are not older than ${REFRESH_TIME} minute(s)."
   fi
 else
-  #the files don't exists contiue to download and extract them.
+  #the files don't exists continue to download and extract them.
   download_files
 fi

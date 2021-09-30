@@ -39,7 +39,7 @@ You will need a [NordVPN](https://nordvpn.com) account.
 - `COUNTRY` *Optional*, you can choose your own country by using the two-letter country codes that are supported by NordVPN.
 - `PROTOCOL` *Optional*, default set to `tcp`, you can change it to `udp`.
 - `SERVER` *Optional*, if not set, connects to the recommended server for you. If set, connects to the server you specify. Example server name format: `us2484.nordvpn.com`.
-
+- `REFRESH_TIME` *Optional*, defaults to 120 minutes. Will only re-download the NordVPN OVPN files after the set amount of minutes.
 
 ## Start container
 
