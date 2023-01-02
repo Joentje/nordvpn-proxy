@@ -56,7 +56,21 @@ docker run -d \
 -v /etc/localtime:/etc/localtime:ro \
 -v ovpn-data:/app/ovpn/config \
 -p 8118:8118 \
-jeroenslot/nordvpn-proxy:latest 
+jeroenslot/nordvpn-proxy:latest
+
+for i in $(seq 1 20); do 
+    if [ "$(docker inspect -f "{{.State.Health.Status}}" nordvpn)" == "healthy" ] ; then
+        printf ' OK'
+        exit 0
+    else
+        sleep 5
+        printf '.'
+    fi
+    if [ $i -eq 20 ] ; then
+        echo -e "\nTimed out waiting for nordvpn start. Check container logs for more info (\`docker logs nordvpn\`)"
+        exit 1
+    fi
+done; 
 ```
 
 Now you can connect other containers to use this connection:
